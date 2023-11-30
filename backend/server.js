@@ -3,6 +3,7 @@ const sqlite3 = require("sqlite3").verbose();
 const bcrypt = require("bcrypt");
 const bodyParser = require("body-parser");
 const helmet = require("helmet");
+const cors = require("cors");
 
 const app = express();
 const port = 3000;
@@ -10,6 +11,7 @@ const port = 3000;
 // Middleware
 app.use(bodyParser.json());
 app.use(helmet());
+app.use(cors());
 
 // Connect to the SQLite database (or create it if it doesn't exist)
 const db = new sqlite3.Database("./machinery_lending.db");
