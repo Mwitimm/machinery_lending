@@ -21,7 +21,7 @@ body::before {
   position: absolute;
   width: 100%;
   height: 100%;
-  background: url("https://www.codingnepalweb.com/demos/create-glassmorphism-login-form-html-css/hero-bg.jpg"), #000;
+  background: url("https://images.unsplash.com/photo-1615811361523-6bd03d7748e7?q=80&w=1374&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"), #000;
   background-position: center;
   background-size: cover;
 }
@@ -44,7 +44,7 @@ form {
 h2 {
   font-size: 2rem;
   margin-bottom: 20px;
-  color: #fff;
+  color: #2be900;
 }
 
 .input-field {
@@ -58,7 +58,7 @@ h2 {
   top: 50%;
   left: 0;
   transform: translateY(-50%);
-  color: #fff;
+  color: #2be900;
   font-size: 16px;
   pointer-events: none;
   transition: 0.15s ease;
@@ -71,7 +71,7 @@ h2 {
   border: none;
   outline: none;
   font-size: 16px;
-  color: #fff;
+  color: #2be900;
 }
 
 .input-field input:focus~label,
@@ -86,11 +86,11 @@ h2 {
   align-items: center;
   justify-content: space-between;
   margin: 25px 0 35px 0;
-  color: #fff;
+  color: #2be900;
 }
 
 #remember {
-  accent-color: #fff;
+  accent-color: #2be900;
 }
 
 .forget label {
@@ -103,7 +103,7 @@ h2 {
 }
 
 .wrapper a {
-  color: #efefef;
+  color: #2be900;
   text-decoration: none;
 }
 
@@ -112,7 +112,7 @@ h2 {
 }
 
 button {
-  background: #fff;
+  background: #2be900;
   color: #000;
   font-weight: 600;
   border: none;
@@ -125,13 +125,13 @@ button {
 }
 
 button:hover {
-  color: #fff;
-  border-color: #fff;
+  color: #2be900;
+  border-color: #2be900;
   background: rgba(255, 255, 255, 0.15);
 }
 
 .register {
   text-align: center;
   margin-top: 30px;
-  color: #fff;
+  color: #2be900;
 }
