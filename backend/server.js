@@ -21,12 +21,35 @@ app.post("/add_user", async (req, res) => {
   const { username, email, phone, password } = req.body;
 
   try {
+    // Check if the user already exists
+    const existingUser = await new Promise((resolve, reject) => {
+      db.get(
+        "SELECT * FROM user WHERE username = ? OR email = ?",
+        [username, email],
+        (err, row) => {
+          if (err) {
+            reject(err);
+          } else {
+            resolve(row);
+          }
+        }
+      );
+    });
+
+    // If the user exists, return an error response
+    if (existingUser) {
+      return res
+        .status(400)
+        .json({ error: "User with this username or email already exists." });
+    }
+
     // Hash the password before storing it
     const hashedPassword = await bcrypt.hash(password, 10);
 
+    // Insert the new user
     db.run(
       "INSERT INTO user (username, email, phone, password) VALUES (?, ?, ?, ?)",
-      [username, email, 0, hashedPassword],
+      [username, email, phone, hashedPassword],
       (err) => {
         if (err) {
           console.error(err.message);
