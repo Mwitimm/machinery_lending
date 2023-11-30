@@ -10,7 +10,7 @@ db.serialize(() => {
       id INTEGER PRIMARY KEY,
       username TEXT NOT NULL,
       email TEXT NOT NULL,
-      phone TEXT NOT NULL,
+      phone TEXT  NULL,
       password TEXT NOT NULL
     )
   `);

@@ -3,6 +3,7 @@ const sqlite3 = require("sqlite3").verbose();
 const bcrypt = require("bcrypt");
 const bodyParser = require("body-parser");
 const helmet = require("helmet");
+const cors = require("cors");
 
 const app = express();
 const port = 3000;
@@ -10,6 +11,7 @@ const port = 3000;
 // Middleware
 app.use(bodyParser.json());
 app.use(helmet());
+app.use(cors());
 
 // Connect to the SQLite database (or create it if it doesn't exist)
 const db = new sqlite3.Database("./machinery_lending.db");
@@ -24,7 +26,7 @@ app.post("/add_user", async (req, res) => {
 
     db.run(
       "INSERT INTO user (username, email, phone, password) VALUES (?, ?, ?, ?)",
-      [username, email, phone, hashedPassword],
+      [username, email, 0, hashedPassword],
       (err) => {
         if (err) {
           console.error(err.message);
@@ -45,38 +47,30 @@ app.post("/add_user", async (req, res) => {
 
 // Endpoint for user login
 app.post("/login", async (req, res) => {
-  const { username, password } = req.body;
+  const { email, password } = req.body;
 
   try {
-    db.get(
-      "SELECT * FROM user WHERE username = ?",
-      [username],
-      async (err, row) => {
-        if (err) {
-          console.error(err.message);
-          return res
-            .status(500)
-            .json({ error: "Error while fetching user from the database." });
-        }
-
-        if (!row) {
-          return res
-            .status(401)
-            .json({ error: "Invalid username or password." });
-        }
-
-        // Compare the entered password with the stored hashed password
-        const passwordMatch = await bcrypt.compare(password, row.password);
-
-        if (passwordMatch) {
-          return res.status(200).json({ message: "Login successful." });
-        } else {
-          return res
-            .status(401)
-            .json({ error: "Invalid username or password." });
-        }
+    db.get("SELECT * FROM user WHERE email = ?", [email], async (err, row) => {
+      if (err) {
+        console.error(err.message);
+        return res
+          .status(500)
+          .json({ error: "Error while fetching user from the database." });
       }
-    );
+
+      if (!row) {
+        return res.status(401).json({ error: "Invalid username or password." });
+      }
+
+      // Compare the entered password with the stored hashed password
+      const passwordMatch = await bcrypt.compare(password, row.password);
+
+      if (passwordMatch) {
+        return res.status(200).json({ message: "Login successful." });
+      } else {
+        return res.status(401).json({ error: "Invalid username or password." });
+      }
+    });
   } catch (error) {
     console.error("Error during user login:", error);
     res.status(500).json({ error: "Internal server error." });
